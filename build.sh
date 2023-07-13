@@ -4,6 +4,15 @@
 # ./autocode.sh
 # ./build.sh
 
+
+# exit whole script and not only the current command (CTRL+C)
+trap "echo Exited!; exit;" SIGINT SIGTERM
+
+# deactivate conda to not use mkl from miniforge
+if ! command -v conda &>/dev/null; then
+    conda deactivate
+fi
+
 DIR="libcint"
 
 if [[ "$(basename "$(pwd)")" == "$DIR" ]]; then
