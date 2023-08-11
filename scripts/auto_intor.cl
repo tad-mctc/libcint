@@ -165,6 +165,22 @@
   '("int1e_ipipnnnip"           ( nabla nabla \| rj rj rj \| nabla ))
   '("int1e_ipipnnnipip"         ( nabla nabla \| rj rj rj \| nabla nabla ))
   ; multipole integrals
+  '("int1e_j"                   ( \| r \| ))
+  '("int1e_jj"                  ( \| r r \| ))
+  '("int1e_jjj"                 ( \| r r r \| ))
+  ; position derivative of multipole integrals
+  '("int1e_ipj"                 ( nabla \| r \| ))
+  '("int1e_jip"                 ( \| r \| nabla ))
+  '("int1e_ipjj"                ( nabla \| r r \| ))
+  '("int1e_jjip"                ( \| r r \| nabla ))
+  '("int1e_ipjjip"              ( nabla \| r r \| nabla ))
+  '("int1e_ipipjj"              ( nabla nabla \| r r \| ))
+  '("int1e_ipipipjj"            ( nabla nabla nabla \| r r \| ))
+  '("int1e_ipipjjip"            ( nabla nabla \| r r \| nabla ))
+  '("int1e_ipjjj"               ( nabla \| r r r \| ))
+  '("int1e_ipjjjip"             ( nabla \| r r r \| nabla ))
+  '("int1e_ipipjjj"             ( nabla nabla \| r r r \| ))
+  ; multipole integrals
   '("int1e_r0"                  ( \| r0 \| ))
   '("int1e_r0r0"                ( \| r0 r0 \| ))
   '("int1e_r0r0r0"              ( \| r0 r0 r0 \| ))
