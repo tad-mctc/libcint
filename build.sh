@@ -23,7 +23,7 @@ if [[ "$(basename "$(pwd)")" == "$DIR" ]]; then
     cd $BUILD_DIR
 
     cmake \
-        -DCMAKE_INSTALL_PREFIX:PATH=/opt/$DIR \
+        -DCMAKE_INSTALL_PREFIX:PATH=/opt/software/$DIR \
         -DWITH_F12=OFF \
         -DWITH_FORTRAN=OFF \
         -DWITH_CINT2_INTERFACE=OFF \
