@@ -6,6 +6,7 @@
 #include <string.h>
 #include <math.h>
 #include <assert.h>
+#include <stdlib.h>
 #include "cint_bas.h"
 #include "misc.h"
 #include "g1e.h"
@@ -229,7 +230,7 @@ FINT CINTg1e_nuc(double *g, CINTEnvVars *envs, FINT nuc_id)
                 fac1 = 2*M_PI * -env[atm[PTR_FRAC_CHARGE+nuc_id*ATM_SLOTS]] * envs->fac[0] * tau / aij;
                 cr = env + atm(PTR_COORD, nuc_id);
         } else {
-                fac1 = 2*M_PI * -fabs(atm[CHARGE_OF+nuc_id*ATM_SLOTS]) * envs->fac[0] * tau / aij;
+                fac1 = 2*M_PI * -abs(atm[CHARGE_OF+nuc_id*ATM_SLOTS]) * envs->fac[0] * tau / aij;
                 cr = env + atm(PTR_COORD, nuc_id);
         }
         crij[0] = cr[0] - rij[0];

@@ -1,3 +1,6 @@
+Version 6.1.3 (2025-08-17):
+	* Approximate quadrature roots when the roots-finding solver is not converged
+
 Version 6.1.1 (2024-01-24):
 	* Explicit SSE3 instructions for int2e
 

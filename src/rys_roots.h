@@ -1,7 +1,7 @@
 #include "cint_config.h"
 
-void CINTrys_roots(int nroots, double x, double *u, double *w);
-void CINTsr_rys_roots(int nroots, double x, double lower, double *u, double *w);
+int CINTrys_roots(int nroots, double x, double *u, double *w);
+int CINTsr_rys_roots(int nroots, double x, double lower, double *u, double *w);
 void CINTstg_roots(int nroots, double ta, double ua, double* rr, double* ww);
 int CINTsr_rys_polyfits(int nroots, double x, double lower, double *u, double *w);
 

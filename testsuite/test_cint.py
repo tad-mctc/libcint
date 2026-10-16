@@ -141,7 +141,8 @@ c_atm = atm.ctypes.data_as(ctypes.c_void_p)
 c_bas = bas.ctypes.data_as(ctypes.c_void_p)
 c_env = env.ctypes.data_as(ctypes.c_void_p)
 
-opt = ctypes.POINTER(ctypes.c_void_p)()
+null_ptr = ctypes.POINTER(ctypes.c_void_p)()
+opt = null_ptr
 _cint.CINTlen_spinor.restype = ctypes.c_int
 
 
@@ -415,6 +416,40 @@ def test_comp2e_spinor(name1, name_ref, shift, dim, place):
                         return
     print("pass: ", name1, "/", name_ref)
 
+def test_sr_int2e(l=4, omega=2.):
+    _atm = numpy.array([[1, 20, 1, 23, 0, 0],
+                        [1, 24, 1, 27, 0, 0]], dtype=numpy.int32)
+    _bas = numpy.array([[0, l, 1, 1, 0, 28, 29, 0],
+                        [1, l, 1, 1, 0, 30, 31, 0]], dtype=numpy.int32)
+    _env = numpy.array(
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0., 0.2, 0.1, 0., 0.1, 0., 4., 0., 1., 1.31497986, 0.4, 0.10582398])
+    _env_sr = numpy.array(
+        [0, 0, 0, 0, 0, 0, 0, 0,-omega, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0., 0.2, 0.1, 0., 0.1, 0., 4., 0., 1., 1.31497986, 0.4, 0.10582398])
+    _env_lr = numpy.array(
+        [0, 0, 0, 0, 0, 0, 0, 0, omega, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0., 0.2, 0.1, 0., 0.1, 0., 4., 0., 1., 1.31497986, 0.4, 0.10582398])
+
+    intor = _cint.int2e_spsp1spsp2_spinor
+    di = l * 4 + 2
+    dat = numpy.empty((di, di, di, di), dtype=numpy.complex128)
+    dat_sr = numpy.empty_like(dat)
+    dat_lr = numpy.empty_like(dat)
+    nbas = 2
+    c_natm = ctypes.c_int(2)
+    c_nbas = ctypes.c_int(nbas)
+    for l in range(nbas):
+        for k in range(l+1):
+            for j in range(nbas):
+                for i in range(j+1):
+                    shls = (ctypes.c_int * 4)(i, j, k, l)
+                    intor(dat.ctypes, null_ptr, shls, _atm.ctypes, c_natm, _bas.ctypes, c_nbas, _env.ctypes, opt, null_ptr)
+                    intor(dat_sr.ctypes, null_ptr, shls, _atm.ctypes, c_natm, _bas.ctypes, c_nbas, _env_sr.ctypes, opt, null_ptr)
+                    intor(dat_lr.ctypes, null_ptr, shls, _atm.ctypes, c_natm, _bas.ctypes, c_nbas, _env_lr.ctypes, opt, null_ptr)
+                    if abs(dat_sr + dat_lr - dat).max() > 1e-8:
+                        print('FAIL', i, j, k, l, abs(dat_sr + dat_lr - dat).max())
+    print("pass: sr_int2e")
 
 if __name__ == "__main__":
     if "--high-prec" in sys.argv:
@@ -493,6 +528,8 @@ if __name__ == "__main__":
     test_erf('cint2e_sph', 0.2, 9)
     test_erf('cint2e_sph', 0.5, 9)
     test_erf('cint2e_sph', 0.8, 9)
+    test_sr_int2e(omega=1.)
+    test_sr_int2e(omega=2.)
 
     if "--quick" not in sys.argv:
         for f in (('cint2e_ip1_sph', 115489.8647398112, 3, 8 ),

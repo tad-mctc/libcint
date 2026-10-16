@@ -267,7 +267,7 @@ void lgamma_inc_like(long double *f, long double t, int m)
         }
 }
 
-inline double _pow(double base, int exponent)
+static inline double pow_(double base, int exponent)
 {
         int i;
         double result = 1;
@@ -280,7 +280,7 @@ inline double _pow(double base, int exponent)
         return result;
 }
 
-inline long double _powl(long double base, int exponent)
+static inline long double powl_(long double base, int exponent)
 {
         int i;
         long double result = 1.l;
@@ -315,7 +315,7 @@ void fmt1_erfc_like(double *f, double t, double lower, int m)
         double bi;
         double e = .5 * exp(-t);
         double e1 = .5 * exp(-t * lower2) * lower;
-        e1 *= _pow(lower2, m);
+        e1 *= pow_(lower2, m);
         double x = e;
         double x1 = e1;
         double s = e - e1;
@@ -427,7 +427,7 @@ void fmt1_lerfc_like(long double *f, long double t, long double lower, int m)
         long double bi;
         long double e = .5l * expl(-t);
         long double e1 = .5l * expl(-t * lower2) * lower;
-        e1 *= _powl(lower2, m);
+        e1 *= powl_(lower2, m);
         long double x = e;
         long double x1 = e1;
         long double s = e - e1;
@@ -493,7 +493,7 @@ void qgamma_inc_like(__float128 *f, __float128 t, int m)
         }
 }
 
-inline __float128 _powq(__float128 base, int exponent)
+static inline __float128 powq_(__float128 base, int exponent)
 {
         int i;
         __float128 result = 1.q;
@@ -555,7 +555,7 @@ void fmt1_qerfc_like(__float128 *f, __float128 t, __float128 lower, int m)
         __float128 bi;
         __float128 e = .5q * expq(-t);
         __float128 e1 = .5q * expq(-t * lower2) * lower;
-        e1 *= _powq(lower2, m);
+        e1 *= powq_(lower2, m);
         __float128 x = e;
         __float128 x1 = e1;
         __float128 s = e - e1;

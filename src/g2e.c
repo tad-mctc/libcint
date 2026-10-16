@@ -4443,7 +4443,15 @@ FINT CINTg0_2e(double *g, double *rij, double *rkl, double cutoff, CINTEnvVars *
         const double omega = envs->env[PTR_RANGE_OMEGA];
         double theta = 0;
         if (omega == 0.) {
-                CINTrys_roots(nroots, x, u, w);
+                int err = CINTrys_roots(nroots, x, u, w);
+                if (err) {
+                        fprintf(stderr, "rys_roots failed. "
+                                "Integrals for l=(%d,%d|%d,%d) exp=(%g,%g|%g,%g) "
+                                "are set to 0\n",
+                                envs->li_ceil, envs->lj_ceil, envs->lk_ceil, envs->ll_ceil,
+                                envs->ai[0], envs->aj[0], envs->ak[0], envs->al[0]);
+                        return 0;
+                }
         } else if (omega < 0.) {
                 // short-range part of range-separated Coulomb
                 theta = omega * omega / (omega * omega + a0);
@@ -4454,10 +4462,18 @@ FINT CINTg0_2e(double *g, double *rij, double *rkl, double cutoff, CINTEnvVars *
                 }
                 int rorder = envs->rys_order;
                 if (rorder == nroots) {
-                        CINTsr_rys_roots(nroots, x, sqrt(theta), u, w);
+                        int err = CINTsr_rys_roots(nroots, x, sqrt(theta), u, w);
+                        if (err) {
+                                fprintf(stderr, "sr_rys_roots failed. "
+                                        "Integrals for l=(%d,%d|%d,%d) exp=(%g,%g|%g,%g) "
+                                        "are set to 0\n",
+                                        envs->li_ceil, envs->lj_ceil, envs->lk_ceil, envs->ll_ceil,
+                                        envs->ai[0], envs->aj[0], envs->ak[0], envs->al[0]);
+                                return 0;
+                        }
                 } else {
                         double sqrt_theta = -sqrt(theta);
-                        CINTrys_roots(rorder, x, u, w);
+                        int err = CINTrys_roots(rorder, x, u, w);
                         CINTrys_roots(rorder, theta*x, u+rorder, w+rorder);
                         if (envs->g_size == 2) {
                                 g[0] = 1;
@@ -4479,7 +4495,15 @@ FINT CINTg0_2e(double *g, double *rij, double *rkl, double cutoff, CINTEnvVars *
                 theta = omega * omega / (omega * omega + a0);
                 x *= theta;
                 fac1 *= sqrt(theta);
-                CINTrys_roots(nroots, x, u, w);
+                int err = CINTrys_roots(nroots, x, u, w);
+                if (err) {
+                        fprintf(stderr, "lr_rys_roots failed. "
+                                "Integrals for l=(%d,%d|%d,%d) exp=(%g,%g|%g,%g) "
+                                "are set to 0\n",
+                                envs->li_ceil, envs->lj_ceil, envs->lk_ceil, envs->ll_ceil,
+                                envs->ai[0], envs->aj[0], envs->ak[0], envs->al[0]);
+                        return 0;
+                }
                 /* u[:] = tau^2 / (1 - tau^2)
                  * omega^2u^2 = a0 * tau^2 / (theta^-1 - tau^2)
                  * transform u[:] to theta^-1 tau^2 / (theta^-1 - tau^2)

@@ -5873,7 +5873,7 @@ void c2s_cart_2e1(double *fijkl, double *gctr, FINT *dims, CINTEnvVars *envs,
                 gctr += nf;
         } } } }
 }
-void c2s_cart_2e2() {};
+void c2s_cart_2e2() {}
 
 
 /*************************************************

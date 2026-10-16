@@ -561,9 +561,9 @@ CACHE_SIZE_T CINT3c2e_drv(double *out, FINT *dims, CINTEnvVars *envs, CINTOpt *o
         FINT n_comp = envs->ncomp_e1 * envs->ncomp_tensor;
         if (out == NULL) {
                 PAIRDATA_NON0IDX_SIZE(pdata_size);
-                CACHE_SIZE_T leng = envs->g_size*3*((1<<envs->gbits)+1);
-                CACHE_SIZE_T len0 = envs->nf*n_comp;
-                CACHE_SIZE_T cache_size = MAX(leng+len0+nc*n_comp*3 + pdata_size,
+                size_t leng = envs->g_size*3*((1<<envs->gbits)+1);
+                size_t len0 = envs->nf*n_comp;
+                size_t cache_size = MAX(leng+len0+nc*n_comp*3 + pdata_size,
                                       nc*n_comp+envs->nf*3);
                 return cache_size;
         }

@@ -132,10 +132,10 @@ static CACHE_SIZE_T _int2e_breit_drv(double complex *out, FINT *dims, FINT *shls
 }
 
 
-BREIT0(ssp1ssp2, 1);
-BREIT0(ssp1sps2, 1);
-BREIT0(sps1ssp2, 1);
-BREIT0(sps1sps2, 1);
+BREIT0(ssp1ssp2, 1)
+BREIT0(ssp1sps2, 1)
+BREIT0(sps1ssp2, 1)
+BREIT0(sps1sps2, 1)
 
 /* based on
  * '("int2e_breit_r1p2"  ( nabla \, r0 \| dot nabla-r12 \| \, nabla ))

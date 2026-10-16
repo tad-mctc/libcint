@@ -430,7 +430,7 @@ void int1e_nuc_optimizer(CINTOpt **opt, FINT *atm, FINT natm,
 }
 
 
-ALL_CINT(int1e_ovlp);
-ALL_CINT(int1e_nuc);
-ALL_CINT_FORTRAN_(int1e_ovlp);
-ALL_CINT_FORTRAN_(int1e_nuc);
+ALL_CINT(int1e_ovlp)
+ALL_CINT(int1e_nuc)
+ALL_CINT_FORTRAN_(int1e_ovlp)
+ALL_CINT_FORTRAN_(int1e_nuc)
