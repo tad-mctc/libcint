@@ -78,7 +78,8 @@ set(cintSrc
   src/autocode/intor1.c
   src/autocode/overlap.c
   src/autocode/dipole.c
-  src/autocode/quadrupole.c)
+  src/autocode/quadrupole.c
+  src/autocode/octupole.c)
 
 #option(WITH_RANGE_COULOMB "Range separated Coulomb" on)
 if(WITH_RANGE_COULOMB)
